@@ -1,68 +1,41 @@
 // ==UserScript==
-
-// @name         Ísland.is Kennitala Fix (SPA-safe) (Örn arnarsson | 0310092210)
-
-// @namespace    http://tampermonkey.net/
-
+// @name         Ísland.is Kennitala Fix (SPA-safe)
+// @namespace    https://github.com/yourusername
 // @version      1
-
-// @description  Works with React routing on island.is and safely replaces Kennitala without breaking layout or styles
-
+// @description  Replaces old Kennitala with new Kennitala on island.is (SPA-safe)
 // @author       You
-
-// @match        https://island.is/minarsidur/min-gogn/yfirlit
-
-// @match        https://island.is/minarsidur/min-gogn/yfirlit/*
-
-// @match        https://island.is/minarsidur/skirteini/okurettindi/default
-
+// @match        https://island.is/minarsidur/min-gogn/yfirlit*
+// @match        https://island.is/minarsidur/skirteini/okurettindi/default*
 // @grant        none
-
-// @license        MIT
-
+// @run-at       document-idle
+// @license      MIT
 // ==/UserScript==
 
 (function() {
-
     'use strict';
 
+    // ⚡ Set your old and new Kennitala here
     const oldKT = '031009-2510';
-
     const newKT = '031005-2210';
-
     const oldKTplain = oldKT.replace('-', '');
-
     const newKTplain = newKT.replace('-', '');
 
-    setInterval(() => {
-
+    // Function to replace Kennitala in text nodes
+    function replaceKT() {
         document.querySelectorAll('p, span, div').forEach(el => {
-
             if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
-
                 let text = el.textContent;
-
-
-
-                if (text.includes(oldKT)) {
-
-                    el.textContent = text.replace(oldKT, newKT);
-
-                }
-
-
-
-                if (text.includes(oldKTplain)) {
-
-                    el.textContent = text.replace(oldKTplain, newKTplain);
-
-                }
-
+                if (text.includes(oldKT)) el.textContent = text.replace(oldKT, newKT);
+                if (text.includes(oldKTplain)) el.textContent = text.replace(oldKTplain, newKTplain);
             }
-
         });
+    }
 
-    }, 50);
+    // Run initially
+    replaceKT();
+
+    // Use MutationObserver for SPA / dynamic content
+    const observer = new MutationObserver(replaceKT);
+    observer.observe(document.body, { childList: true, subtree: true });
 
 })();
-
