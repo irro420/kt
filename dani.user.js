@@ -1,11 +1,10 @@
 // ==UserScript==
 // @name         Ísland.is Kennitala Fix (SPA-safe)
 // @namespace    https://github.com/yourusername
-// @version      1
-// @description  Replaces old Kennitala with new Kennitala on island.is (SPA-safe)
+// @version      1.1
+// @description  Replaces old Kennitala with new Kennitala on all island.is pages (SPA-safe)
 // @author       You
-// @match        https://island.is/minarsidur/min-gogn/yfirlit*
-// @match        https://island.is/minarsidur/skirteini/okurettindi/default*
+// @match        *://island.is/*
 // @grant        none
 // @run-at       document-idle
 // @license      MIT
